@@ -8,8 +8,8 @@ board = pyfirmata.Arduino('/dev/ttyACM0')
 
 pinRotorDerechoAdelante = board.get_pin('d:11:o')
 pinRotorDerechoPatras = board.get_pin('d:10:o')
-pinRotorIzquierdoAdelante = board.get_pin('d:3:p')
-pinRotorIzquierdoPatras = board.get_pin('d:9:p')
+pinRotorIzquierdoAdelante = board.get_pin('d:3:o')
+pinRotorIzquierdoPatras = board.get_pin('d:9:o')
 x = board.get_pin('d:6:s')
 y = board.get_pin('d:5:s')
 
@@ -37,9 +37,7 @@ def read_ch():
 
 while True:
     ch = read_ch()
-    if ch == 'v':
-        velocidads = raw_input('Introduzca la velocidad de 0 a 100:')
-        velocidad = int(velocidads)
+   
         
     if ch == 'w':
         print('Hacia delante')
@@ -101,20 +99,20 @@ while True:
             print('No se puede girar mas la camara a la izquierda')
 
     if ch == 'f':
-        print('Voltea camara derecha')
+        print('Levanta camara')
         if centroy >= 10:
             centroy = centroy - 5
             y.write(centroy)
         else :
-            print('No se puede girar mas la camara a la derecha')
+            print('No se puede subir mas la camara')
 
     if ch == 'r':
-        print('Voltea camara izquierda')
+        print('Baja camara')
         if centroy <= 170:
             centroy = centroy + 5
             y.write(centroy)
         else :
-            print('No se puede girar mas la camara a la izquierda')
+            print('No se puede bajar mas la camara')
 
 
 
