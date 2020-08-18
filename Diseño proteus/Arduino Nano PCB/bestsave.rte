@@ -1,0 +1,373 @@
+ (routes 
+  (resolution mm 100000)
+  (parser
+  )
+  (parser
+  )
+  (structure_out
+   (layer TOP (type signal)
+   )
+   (layer I1 (type signal)
+   )
+   (layer I2 (type signal)
+   )
+   (layer I3 (type signal)
+   )
+   (layer I4 (type signal)
+   )
+   (layer I5 (type signal)
+   )
+   (layer I6 (type signal)
+   )
+   (layer I7 (type signal)
+   )
+   (layer I8 (type signal)
+   )
+   (layer I9 (type signal)
+   )
+   (layer I10 (type signal)
+   )
+   (layer I11 (type signal)
+   )
+   (layer I12 (type signal)
+   )
+   (layer I13 (type signal)
+   )
+   (layer I14 (type signal)
+   )
+   (layer BOT (type signal)
+   )
+  )
+  (library_out
+  (padstack $VIA#0_SIGNAL
+   (shape (circ TOP 76200 0 0))
+   (shape (circ I1 76200 0 0))
+   (shape (circ I2 76200 0 0))
+   (shape (circ I3 76200 0 0))
+   (shape (circ I4 76200 0 0))
+   (shape (circ I5 76200 0 0))
+   (shape (circ I6 76200 0 0))
+   (shape (circ I7 76200 0 0))
+   (shape (circ I8 76200 0 0))
+   (shape (circ I9 76200 0 0))
+   (shape (circ I10 76200 0 0))
+   (shape (circ I11 76200 0 0))
+   (shape (circ I12 76200 0 0))
+   (shape (circ I13 76200 0 0))
+   (shape (circ I14 76200 0 0))
+   (shape (circ BOT 76200 0 0))
+  )
+  (padstack $VIA#0_POWER
+   (shape (circ TOP 76200 0 0))
+   (shape (circ I1 76200 0 0))
+   (shape (circ I2 76200 0 0))
+   (shape (circ I3 76200 0 0))
+   (shape (circ I4 76200 0 0))
+   (shape (circ I5 76200 0 0))
+   (shape (circ I6 76200 0 0))
+   (shape (circ I7 76200 0 0))
+   (shape (circ I8 76200 0 0))
+   (shape (circ I9 76200 0 0))
+   (shape (circ I10 76200 0 0))
+   (shape (circ I11 76200 0 0))
+   (shape (circ I12 76200 0 0))
+   (shape (circ I13 76200 0 0))
+   (shape (circ I14 76200 0 0))
+   (shape (circ BOT 76200 0 0))
+  )
+  (padstack PS5
+   (shape (circ TOP 76200 0 0))
+   (shape (circ I1 76200 0 0))
+   (shape (circ I2 76200 0 0))
+   (shape (circ I3 76200 0 0))
+   (shape (circ I4 76200 0 0))
+   (shape (circ I5 76200 0 0))
+   (shape (circ I6 76200 0 0))
+   (shape (circ I7 76200 0 0))
+   (shape (circ I8 76200 0 0))
+   (shape (circ I9 76200 0 0))
+   (shape (circ I10 76200 0 0))
+   (shape (circ I11 76200 0 0))
+   (shape (circ I12 76200 0 0))
+   (shape (circ I13 76200 0 0))
+   (shape (circ I14 76200 0 0))
+   (shape (circ BOT 76200 0 0))
+  )
+  )
+  (network_out
+   (Net #00000 
+   (rule
+   )
+   (wire (path BOT 76200  -4127500 444500 -4127500 2476500 -3937000 2476500
+     -3937000 2794000)
+    (connect (terminal via) (terminal pin NRF24L01-4))
+   )
+   (wire (path TOP 76200  -4127500 127000 -4127500 444500)
+    (connect (terminal via) (terminal via))
+   )
+   (wire (path BOT 76200  -3810000 127000 -4127500 127000)
+    (connect (terminal pin "ARDUINO NANO"-22) (terminal via))
+   )
+   (via $VIA#0_SIGNAL -4127500 444500)
+   (via $VIA#0_SIGNAL -4127500 127000)
+   )
+   (Net #00001 
+   (rule
+   )
+   (wire (path BOT 76200  -3556000 127000 -3556000 317500 -4635500 317500
+     -4635500 2994000 -4337000 2994000)
+    (connect (terminal pin "ARDUINO NANO"-0) (terminal pin NRF24L01-1))
+   )
+   )
+   (Net #00011 
+   (rule
+   )
+   (wire (path TOP 76200  -952500 1016000 -4635500 1016000 -4635500 3429000
+     -2413000 3429000)
+    (connect (terminal wire) (terminal pin L293D-15))
+   )
+   (wire (path BOT 76200  -1016000 127000 -1016000 -261818 -889000 -261818
+     -889000 -1397000)
+    (connect (terminal pin "ARDUINO NANO"-1) (terminal pin "SERVO 1"-1))
+   )
+   (wire (path TOP 76200  -1016000 127000 -1016000 571500 -952500 571500
+     -952500 1016000)
+    (connect (terminal pin "ARDUINO NANO"-1) (terminal wire))
+   )
+   (wire (path TOP 76200  -952500 1016000 1524000 1016000)
+    (connect (terminal wire) (terminal pin "SERVO 2"-1))
+   )
+   )
+   (Net #00012 
+   (rule
+   )
+   (wire (path TOP 76200  -762000 127000 -762000 -750000 -3550000 -750000)
+    (connect (terminal pin "ARDUINO NANO"-25) (terminal pin RESET-1))
+   )
+   (wire (path TOP 76200  -1143000 1206500 -762000 1206500 -762000 1631200)
+    (connect (terminal via) (terminal pin "ARDUINO NANO"-26))
+   )
+   (wire (path BOT 76200  -762000 127000 -762000 825500 -1143000 825500
+     -1143000 1206500)
+    (connect (terminal pin "ARDUINO NANO"-25) (terminal via))
+   )
+   (via $VIA#0_SIGNAL -1143000 1206500)
+   )
+   (Net #00015 
+   (rule
+   )
+   (wire (path BOT 76200  -3810000 1631200 -3810000 2171183 -3737000 2171183
+     -3737000 2794000)
+    (connect (terminal pin "ARDUINO NANO"-21) (terminal pin NRF24L01-6))
+   )
+   )
+   (Net #00016 
+   (rule
+   )
+   (wire (path BOT 76200  -3556000 1631200 -3556000 3175000 -3937000 3175000
+     -3937000 2994000)
+    (connect (terminal pin "ARDUINO NANO"-20) (terminal pin NRF24L01-5))
+   )
+   )
+   (Net #00017 
+   (rule
+   )
+   (wire (path TOP 76200  -889000 444500 63500 444500 63500 -952500
+     -1089000 -952500 -1089000 -1397000)
+    (connect (terminal via) (terminal pin "SERVO 1"-0))
+   )
+   (wire (path BOT 76200  -3302000 1631200 -3302000 444500 -889000 444500)
+    (connect (terminal pin "ARDUINO NANO"-19) (terminal via))
+   )
+   (via $VIA#0_SIGNAL -889000 444500)
+   )
+   (Net #00018 
+   (rule
+   )
+   (wire (path TOP 76200  -3048000 1631200 -3048000 2032000 -889000 2032000
+     -889000 2667000)
+    (connect (terminal pin "ARDUINO NANO"-18) (terminal pin L293D-6))
+   )
+   )
+   (Net #00019 
+   (rule
+   )
+   (wire (path BOT 76200  -2794000 1631200 -2794000 3302000 -4137000 3302000
+     -4137000 2994000)
+    (connect (terminal pin "ARDUINO NANO"-17) (terminal pin NRF24L01-3))
+   )
+   )
+   (Net #00020 
+   (rule
+   )
+   (wire (path TOP 76200  -2540000 1631200 -2540000 1460500 -4137000 1460500
+     -4137000 2794000)
+    (connect (terminal pin "ARDUINO NANO"-16) (terminal pin NRF24L01-2))
+   )
+   )
+   (Net #00021 
+   (rule
+   )
+   (wire (path BOT 76200  -2286000 1631200 -2286000 2286000 -2159000 2286000
+     -2159000 2667000)
+    (connect (terminal pin "ARDUINO NANO"-15) (terminal pin L293D-1))
+   )
+   )
+   (Net #00022 
+   (rule
+   )
+   (wire (path BOT 76200  -2032000 1631200 -2032000 3048000 -2159000 3048000
+     -2159000 3429000)
+    (connect (terminal pin "ARDUINO NANO"-14) (terminal pin L293D-14))
+   )
+   )
+   (Net #00023 
+   (rule
+   )
+   (wire (path BOT 76200  -1778000 1631200 -1778000 3556000 -2286000 3556000
+     -2286000 3040048 -2413000 3040048 -2413000 2667000)
+    (connect (terminal pin "ARDUINO NANO"-13) (terminal pin L293D-0))
+   )
+   )
+   (Net #00024 
+   (rule
+   )
+   (wire (path BOT 76200  -1524000 1631200 -1524000 3175000 -889000 3175000
+     -889000 3429000)
+    (connect (terminal pin "ARDUINO NANO"-12) (terminal pin L293D-9))
+   )
+   )
+   (Net #00025 
+   (rule
+   )
+   (wire (path BOT 76200  -1270000 1631200 -1270000 2794000 -635000 2794000
+     -635000 3429000)
+    (connect (terminal pin "ARDUINO NANO"-11) (terminal pin L293D-8))
+   )
+   )
+   (Net #00026 
+   (rule
+   )
+   (wire (path TOP 76200  -508000 1631200 -508000 1216000 1524000 1216000)
+    (connect (terminal pin "ARDUINO NANO"-27) (terminal pin "SERVO 2"-0))
+   )
+   )
+   (Net #00028 
+   (rule
+   )
+   (wire (path TOP 76200  -1905000 1905000 -1905000 1853760 1250000 1853760)
+    (connect (terminal via) (terminal pin MOTOR2-1))
+   )
+   (wire (path BOT 76200  -1905000 2667000 -1905000 1905000)
+    (connect (terminal pin L293D-2) (terminal via))
+   )
+   (via $VIA#0_SIGNAL -1905000 1905000)
+   )
+   (Net #00029 
+   (rule
+   )
+   (wire (path TOP 76200  -190500 2286000 -190500 2250000 1250000 2250000)
+    (connect (terminal via) (terminal pin MOTOR2-0))
+   )
+   (wire (path BOT 76200  -1143000 2667000 -1143000 2286000 -190500 2286000)
+    (connect (terminal pin L293D-5) (terminal via))
+   )
+   (via $VIA#0_SIGNAL -190500 2286000)
+   )
+   (Net #00030 
+   (rule
+   )
+   (wire (path TOP 76200  -1143000 3429000 -1143000 3103760 1250000 3103760)
+    (connect (terminal pin L293D-10) (terminal pin MOTOR1-1))
+   )
+   )
+   (Net #00031 
+   (rule
+   )
+   (wire (path TOP 76200  -1905000 3429000 -1905000 3746500 762000 3746500
+     762000 3500000 1250000 3500000)
+    (connect (terminal pin L293D-13) (terminal pin MOTOR1-0))
+   )
+   )
+   (Net GND 
+   (rule
+   )
+   (wire (path TOP 101600  -1651000 2667000 -1651000 3175000 -4508500 3175000
+     -4508500 2794000 -4337000 2794000)
+    (connect (terminal pin L293D-3) (terminal pin NRF24L01-0))
+   )
+   (wire (path BOT 101600  -508000 127000 -508000 1270000 -1016000 1270000
+     -1016000 1631200)
+    (connect (terminal pin "ARDUINO NANO"-23) (terminal pin "ARDUINO NANO"-24))
+   )
+   (wire (path TOP 101600  -689000 -1397000 0 -1397000 0 -1524000
+     1396240 -1524000 1396240 -1250000)
+    (connect (terminal pin "SERVO 1"-2) (terminal pin POWER-1))
+   )
+   (wire (path BOT 101600  -508000 127000 -508000 -952500 -689000 -952500
+     -689000 -1397000)
+    (connect (terminal pin "ARDUINO NANO"-23) (terminal pin "SERVO 1"-2))
+   )
+   (wire (path BOT 101600  1396240 -1250000 1396240 -181680 1524000 -181680
+     1524000 816000)
+    (connect (terminal pin POWER-1) (terminal pin "SERVO 2"-2))
+   )
+   (wire (path BOT 101600  -2467000 -1397000 -2467000 -1206500 -3619500 -1206500)
+    (connect (terminal pin VENTILADOR-1) (terminal wire))
+   )
+   (wire (path BOT 101600  -3619500 -1206500 -3750000 -1206500 -3750000 -750000)
+    (connect (terminal wire) (terminal pin RESET-0))
+   )
+   (wire (path BOT 101600  -3619500 -1206500 -3619500 -1397000 -3864000 -1397000)
+    (connect (terminal wire) (terminal pin CAMARA-1))
+   )
+   (wire (path BOT 101600  -1397000 2159000 -1397000 2667000)
+    (connect (terminal via) (terminal pin L293D-4))
+   )
+   (wire (path TOP 101600  -1016000 2159000 -1397000 2159000)
+    (connect (terminal via) (terminal via))
+   )
+   (wire (path BOT 101600  -1016000 1631200 -1016000 2159000)
+    (connect (terminal pin "ARDUINO NANO"-24) (terminal via))
+   )
+   (wire (path BOT 101600  -1651000 2667000 -1651000 3429000)
+    (connect (terminal pin L293D-3) (terminal pin L293D-12))
+   )
+   (wire (path TOP 101600  -1651000 3429000 -1397000 3429000)
+    (connect (terminal pin L293D-12) (terminal pin L293D-11))
+   )
+   (wire (path TOP 101600  -1397000 2667000 -1651000 2667000)
+    (connect (terminal pin L293D-4) (terminal pin L293D-3))
+   )
+   (wire (path TOP 101600  -689000 -1397000 -689000 -1587500 -2032000 -1587500
+     -2032000 -1397000 -2467000 -1397000)
+    (connect (terminal pin "SERVO 1"-2) (terminal pin VENTILADOR-1))
+   )
+   (via $VIA#0_POWER -1397000 2159000)
+   (via $VIA#0_POWER -1016000 2159000)
+   )
+   (Net VCC/VDD 
+   (rule
+   )
+   (wire (path BOT 101600  -254000 127000 63500 127000 63500 2667000
+     -635000 2667000)
+    (connect (terminal pin "ARDUINO NANO"-29) (terminal pin L293D-7))
+   )
+   (wire (path BOT 101600  -254000 -1460500 159489 -1460500 159489 -1250000
+     1000000 -1250000)
+    (connect (terminal wire) (terminal pin POWER-0))
+   )
+   (wire (path BOT 101600  -254000 -1460500 -381000 -1460500 -381000 -1587500
+     -2667000 -1587500 -2667000 -1397000)
+    (connect (terminal wire) (terminal pin VENTILADOR-0))
+   )
+   (wire (path BOT 101600  -254000 127000 -254000 -1460500)
+    (connect (terminal pin "ARDUINO NANO"-29) (terminal wire))
+   )
+   (wire (path TOP 101600  -2667000 -1397000 -3111500 -1397000 -3111500 -1206500
+     -4064000 -1206500 -4064000 -1397000)
+    (connect (terminal pin VENTILADOR-0) (terminal pin CAMARA-0))
+   )
+   )
+  )
+ )
