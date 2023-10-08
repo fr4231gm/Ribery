@@ -8,7 +8,9 @@
 */
 #include <SPI.h>
 #include <RF24.h>
-RF24 radio(9, 10);  // CE, CSN
+#include <Servo.h>
+#define AVR_ATmega2560
+RF24 radio(9, 53);  // CE, CSN
 const byte address[6] = "00001";
 
 int motorA_adelante = 6;
@@ -16,9 +18,13 @@ int motorA_atras = 5;
 int motorB_adelante = 3;
 int motorB_atras = 7;
 
-int pinLuces = 4;
-int pinClaxon = A0;
-int 
+int pinLuces = 36;
+int pinClaxon = 37;
+int pinServoX = 2;
+int pinServoY = 8;
+
+Servo servoX;
+Servo servoY;
 
 struct package {
   int valorMotorA = 0;
@@ -37,9 +43,11 @@ Package data;
 
 
 void setup() {
-
+  
   Serial.begin(9600);
   Serial.println("Inicializando pines de motores");
+  servoX.attach(pinServoX);
+  servoY.attach(pinServoY);
   delay(400);
   //Motor izquierda
   //IN1
@@ -47,28 +55,30 @@ void setup() {
   //IN2
   pinMode(5, OUTPUT);
   //EN
-  pinMode(2, OUTPUT);
+  pinMode(13, OUTPUT);
   //Motor derecha
   //IN3
   pinMode(3, OUTPUT);
   //IN4
   pinMode(7, OUTPUT);
   //ENABLE
-  pinMode(8, OUTPUT);
+  pinMode(11, OUTPUT);
 
-  digitalWrite(8, HIGH);
-  digitalWrite(2, HIGH);
+  digitalWrite(13, HIGH);
+  digitalWrite(11, HIGH);
 
   Serial.println("Inicializando radio");
 
   radio.begin();
   radio.openReadingPipe(0, address);
-  radio.setPALevel(RF24_PA_HIGH);
+  radio.setPALevel(RF24_PA_LOW);
   radio.startListening();
 
   Serial.println("Comunication address: 00001");
   delay(400);
   Serial.println("Power Leveol: " + RF24_PA_HIGH);
+  servoX.write(90);
+  servoY.write(90);
   delay(400);
   Serial.println("Bienvendio");
   delay(200);
@@ -77,9 +87,16 @@ void setup() {
 void loop() {
 
   if (radio.available()) {
+    Serial.println("Conexión establecida");
     while (radio.available()) {
       radio.read(&data, sizeof(data));
+
+    if(radio.isChipConnected()){
+      Serial.println("Esta conectado");
+    }else {
+      Serial.println("No esta conectado");
     }
+    
 
     if (data.valorMotorA != 0 || data.valorMotorB != 0) {
 
@@ -115,7 +132,21 @@ void loop() {
       digitalWrite(motorB_atras, LOW);
     }
 
+    if(data.claxon == true){
+      digitalWrite(pinClaxon, HIGH);
+    }else{
+      digitalWrite(pinClaxon, LOW);
+    }
 
-    delay(50);
+    if(data.lightActivated == true){
+      digitalWrite(pinLuces, HIGH);
+    }else {
+      digitalWrite(pinLuces, LOW);
+    }
+
+
+
+    delay(1000);
+    }
   }
 }

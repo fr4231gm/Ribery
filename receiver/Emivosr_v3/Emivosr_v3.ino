@@ -14,18 +14,18 @@ const byte address[6] = "00001";
 //Valores para los joysticks y declaración de variables
 
 
-int pinAEjeY = A0;
-int pinAEjeX = A1;
-int pinBEjeX = A2;
-int pinBEjeY = A3;
+int pinAEjeY = A1;
+int pinAEjeX = A0;
+int pinBEjeX = A3;
+int pinBEjeY = A2;
 int joystickA_X = 0;
 int joystickA_Y = 0;
 int joystickB_X = 0;
 int joystickB_Y = 0;
 int basicControl = 1;
 int cameraControl = 2;
-int pinLuces = 2;
-int pinClaxon = 3;
+int pinLuces = 3;
+int pinClaxon = 2;
 int pinCambiarModo = 4;
 
 
@@ -48,16 +48,17 @@ Package data;
 
 
 void setup() {
+  pinMode(13, OUTPUT);
   Serial.begin(9600);
   radio.begin();
   delay(1000);
   Serial.println("Inicializando sistema de transmisión");
   radio.openWritingPipe(address);
-  radio.setPALevel(RF24_PA_HIGH);
+  radio.setPALevel(RF24_PA_LOW);
   radio.stopListening();
   Serial.println("Comunication address: 00001");
   delay(400);
-  Serial.println("Power Level: " + RF24_PA_HIGH);
+  Serial.println("Power Level: " + RF24_PA_LOW);
   delay(400);
   Serial.println("Bienvendio");
   delay(200);
@@ -71,14 +72,15 @@ void loop() {
   joystickB_X = analogRead(pinBEjeX);
   joystickB_Y = analogRead(pinBEjeY);
 
+  
   if (data.controlMode == basicControl) {
     //En este modo de control directamente calculamos el valor asociado al motor izquierdo y derecho a partir de los valores de Y de los Joysticks
     //El punto de pivote es entre 462 y 562, si el joystick se encuentra entre esos valores, estamos en 0
-
+    Serial.println("Usando el modo control basico");
     //Controles para el Motor A (motor izquierdo)
     if (joystickA_Y > 562) {
       //Motor A hacia delante
-      data.valorMotorA = ((joystickA_Y - 562) * 2.216) / 4;
+      data.valorMotorA = -((joystickA_Y - 562) * 2.216) / 4;
     } else if (joystickA_Y < 462) {
       //Motor A hacia atrás
       data.valorMotorA = -((joystickA_Y - 462) * 2.216) / 4;
@@ -90,7 +92,7 @@ void loop() {
     //Controles para el Motor B (motor derecho)
     if (joystickB_Y > 562) {
       //Motor B hacia delante
-      data.valorMotorB = ((joystickB_Y - 562) * 2.216) / 4;
+      data.valorMotorB = -((joystickB_Y - 562) * 2.216) / 4;
     } else if (joystickB_Y < 462) {
       //Motor B hacia atrás
       data.valorMotorB = -((joystickB_Y - 462) * 2.216) / 4;
@@ -107,22 +109,22 @@ void loop() {
     if (joystickA_X < 462 || joystickA_X > 562) {
       if (joystickA_X < 462) {
         //Giramos hacia la derecha
-        data.valorMotorA = ((joystickA_Y - 562) * 2.216) / 4;
-        data.valorMotorB = -((joystickB_Y - 462) * 2.216) / 4;
+        data.valorMotorA = -((joystickA_X - 462) * 2.216) / 4;
+        data.valorMotorB = ((joystickA_X - 462) * 2.216) / 4;
       }
 
       if (joystickA_X > 562) {
         //Giramos a la izquierda
-        data.valorMotorA = -((joystickA_Y - 562) * 2.216) / 4;
-        data.valorMotorB = ((joystickB_Y - 462) * 2.216) / 4;
+        data.valorMotorA = -((joystickA_X - 562) * 2.216) / 4;
+        data.valorMotorB = ((joystickA_X - 562) * 2.216) / 4;
       }
     } else {
       if (joystickA_Y < 462) {
-        data.valorMotorA = -((462 - joystickA_Y) * 2.216) / 4;
-        data.valorMotorB = -((462 - joystickA_Y) * 2.216) / 4;
+        data.valorMotorA = ((462 - joystickA_Y) * 2.216) / 4;
+        data.valorMotorB = ((462 - joystickA_Y) * 2.216) / 4;
       } else if (joystickA_Y > 562) {
-        data.valorMotorA = ((joystickA_Y - 562) * 2.216) / 4;
-        data.valorMotorB = ((joystickA_Y - 562) * 2.216) / 4;
+        data.valorMotorA = -((joystickA_Y - 562) * 2.216) / 4;
+        data.valorMotorB = -((joystickA_Y - 562) * 2.216) / 4;
       } else if (joystickA_Y > 462 && joystickA_Y < 562) {
         //Punto parado
         data.valorMotorA = 0;
@@ -142,8 +144,8 @@ void loop() {
     }
 
     //Se actualiza la posición del servo en el objeto
-    data.servoX = data.servoX + servoXValue;
-    data.servoY = data.servoY + servoYValue;
+    data.servoX = data.servoX - servoXValue;
+    data.servoY = data.servoY - servoYValue;
   }
 
   if (digitalRead(pinCambiarModo) == HIGH) {
@@ -164,6 +166,46 @@ void loop() {
     data.lightActivated = false;
   }
 
-  radio.write(&data, sizeof(data));
-  delay(50);
+  if(radio.write(&data, sizeof(data))){
+    digitalWrite(13, HIGH);
+  }else{
+    digitalWrite(13, LOW);
+  }
+
+    Serial.println("Valores crudos de sensores: ");
+  Serial.println("Joystick A");
+  Serial.println(joystickA_X);
+  Serial.println(joystickA_Y);
+  Serial.println("Joystick B");
+  Serial.println(joystickB_X);
+  Serial.println(joystickB_Y);
+  Serial.println("Pin de luces, de claxo y de cambiar modo, en orden");
+  Serial.println(digitalRead(pinLuces));
+  Serial.println(digitalRead(pinClaxon));
+  Serial.println(digitalRead(pinCambiarModo));
+  Serial.println("======================================================");
+
+  Serial.println("Valores del objeto enviado al receptor");
+  Serial.println("Datos a transmitir: ");
+  Serial.println("Valor del motor A: ");
+  Serial.println(data.valorMotorA);
+  Serial.println("Valor del motor B: ");
+  Serial.println(data.valorMotorB);
+  Serial.println("Valor del claxon: ");
+  Serial.println(data.claxon);
+  Serial.println("Valor de tipo control: ");
+  Serial.println(data.controlMode);
+  Serial.println("Valor de luces: ");
+  Serial.println(data.lightActivated);
+  Serial.println("Valor de servoX: ");
+  Serial.println(data.servoX);
+  Serial.println("Valor de servoY: ");
+  Serial.println(data.servoY);
+  if(radio.isChipConnected()){
+    Serial.println("Chip conectado");
+  }else{
+    Serial.println("No conectado");
+  }
+
+  delay(1000);
 }
