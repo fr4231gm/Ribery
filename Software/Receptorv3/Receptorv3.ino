@@ -9,8 +9,8 @@
 #include <SPI.h>
 #include <RF24.h>
 #include <Servo.h>
-#define AVR_ATmega2560
-RF24 radio(9, 53);  // CE, CSN
+
+RF24 radio(9, 10);  // CE, CSN
 const byte address[6] = "00001";
 
 int motorA_adelante = 6;
@@ -43,11 +43,11 @@ Package data;
 
 
 void setup() {
-  
   Serial.begin(9600);
   Serial.println("Inicializando pines de motores");
   servoX.attach(pinServoX);
   servoY.attach(pinServoY);
+  pinMode(pinLuces, OUTPUT);
   delay(400);
   //Motor izquierda
   //IN1
@@ -71,12 +71,12 @@ void setup() {
 
   radio.begin();
   radio.openReadingPipe(0, address);
-  radio.setPALevel(RF24_PA_LOW);
+  radio.setPALevel(RF24_PA_MAX);
   radio.startListening();
 
   Serial.println("Comunication address: 00001");
   delay(400);
-  Serial.println("Power Leveol: " + RF24_PA_HIGH);
+  Serial.println("Power Leveol: " + RF24_PA_MAX);
   servoX.write(90);
   servoY.write(90);
   delay(400);
@@ -91,11 +91,6 @@ void loop() {
     while (radio.available()) {
       radio.read(&data, sizeof(data));
 
-    if(radio.isChipConnected()){
-      Serial.println("Esta conectado");
-    }else {
-      Serial.println("No esta conectado");
-    }
     
 
     if (data.valorMotorA != 0 || data.valorMotorB != 0) {
@@ -132,6 +127,11 @@ void loop() {
       digitalWrite(motorB_atras, LOW);
     }
 
+    if(data.controlMode == 2){
+      servoX.write(data.servoX);
+      servoY.write(data.servoY);
+    }
+
     if(data.claxon == true){
       digitalWrite(pinClaxon, HIGH);
     }else{
@@ -144,9 +144,7 @@ void loop() {
       digitalWrite(pinLuces, LOW);
     }
 
-
-
-    delay(1000);
+    delay(50);
     }
   }
 }

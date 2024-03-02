@@ -54,11 +54,11 @@ void setup() {
   delay(1000);
   Serial.println("Inicializando sistema de transmisión");
   radio.openWritingPipe(address);
-  radio.setPALevel(RF24_PA_LOW);
+  radio.setPALevel(RF24_PA_MAX);
   radio.stopListening();
   Serial.println("Comunication address: 00001");
   delay(400);
-  Serial.println("Power Level: " + RF24_PA_LOW);
+  Serial.println("Power Level: " + RF24_PA_MAX);
   delay(400);
   Serial.println("Bienvendio");
   delay(200);
@@ -136,11 +136,11 @@ void loop() {
     int servoYValue = 0;
     //Recogemos los valores del movimiento de la camara
     if (joystickB_X > 562 || joystickB_X < 462) {
-      servoXValue = map(joystickB_X, 0, 1023, -4, 4);
+      servoXValue = map(joystickB_X, 0, 1023, 4, -4);
     }
 
     if (joystickB_Y > 562 || joystickB_Y < 462) {
-      servoYValue = map(joystickB_Y, 0, 1023, -4, 4);
+      servoYValue = map(joystickB_Y, 0, 1023, 4, -4);
     }
 
     //Se actualiza la posición del servo en el objeto
@@ -166,46 +166,8 @@ void loop() {
     data.lightActivated = false;
   }
 
-  if(radio.write(&data, sizeof(data))){
-    digitalWrite(13, HIGH);
-  }else{
-    digitalWrite(13, LOW);
-  }
+  radio.write(&data, sizeof(data));
 
-    Serial.println("Valores crudos de sensores: ");
-  Serial.println("Joystick A");
-  Serial.println(joystickA_X);
-  Serial.println(joystickA_Y);
-  Serial.println("Joystick B");
-  Serial.println(joystickB_X);
-  Serial.println(joystickB_Y);
-  Serial.println("Pin de luces, de claxo y de cambiar modo, en orden");
-  Serial.println(digitalRead(pinLuces));
-  Serial.println(digitalRead(pinClaxon));
-  Serial.println(digitalRead(pinCambiarModo));
-  Serial.println("======================================================");
-
-  Serial.println("Valores del objeto enviado al receptor");
-  Serial.println("Datos a transmitir: ");
-  Serial.println("Valor del motor A: ");
-  Serial.println(data.valorMotorA);
-  Serial.println("Valor del motor B: ");
-  Serial.println(data.valorMotorB);
-  Serial.println("Valor del claxon: ");
-  Serial.println(data.claxon);
-  Serial.println("Valor de tipo control: ");
-  Serial.println(data.controlMode);
-  Serial.println("Valor de luces: ");
-  Serial.println(data.lightActivated);
-  Serial.println("Valor de servoX: ");
-  Serial.println(data.servoX);
-  Serial.println("Valor de servoY: ");
-  Serial.println(data.servoY);
-  if(radio.isChipConnected()){
-    Serial.println("Chip conectado");
-  }else{
-    Serial.println("No conectado");
-  }
-
-  delay(1000);
+  
+  delay(50);
 }
